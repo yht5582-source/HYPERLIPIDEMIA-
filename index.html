@@ -66,7 +66,7 @@
     </div>
     <div class="group-title"><span class="dot"></span> 重要共病與 ASCVD 病史</div>
     <div class="checkgrid">
-      <label class="ck"><input id="ascvd" type="checkbox"> 已確立 ASCVD（MI／缺血性腦中風／PAD 等）</label>
+      <label class="ck"><input id="ascvd" type="checkbox"> 已確立 ASCVD（ACS／再通術／動脈硬化相關缺血性中風或 TIA／PAD，或影像 ≥50% 狹窄）</label>
       <label class="ck"><input id="extreme" type="checkbox"> 確認符合極高風險 ASCVD 細分類</label>
       <label class="ck"><input id="dm" type="checkbox"> 糖尿病</label>
       <label class="ck"><input id="htn" type="checkbox" checked> 高血壓</label>
@@ -78,7 +78,7 @@
       <label class="ck"><input id="preventExcluded" type="checkbox"> PREVENT 其他排除條件（已知 HF／LVEF &lt;40%、重大遺傳性心血管疾病、預期壽命 &lt;1 年）</label>
       <label class="ck"><input id="statinIntol" type="checkbox"> Statin 不耐受／使用受限</label>
     </div>
-    <div class="hint">極高風險 ASCVD 需依台灣共識核實病史（如近期／反覆 MI、ACS 合併 DM 等），此選項不會只因 ASCVD 自動勾選。CKD 須確認慢性病程，單次 eGFR／UACR 不足以確診。</div>
+    <div class="hint">極高風險（健保表一定義）：冠狀動脈疾病合併「一年內 MI、≥2 次 MI、多支冠狀動脈阻塞、ACS 合併糖尿病、PAD 或頸動脈狹窄」任一；或 PAD 合併冠狀動脈疾病或頸動脈狹窄。此選項不會只因 ASCVD 自動勾選。CKD 須 eGFR <60 或 UACR ≥30 持續 ≥3 個月（透析前），單次數值不足以確診。</div>
     <div class="group-title"><span class="dot"></span> 其他風險修正因子</div>
     <div class="fields">
       <div class="field"><label for="lpa">Lp(a) 數值</label><input id="lpa" type="number" min="0" step="0.1" placeholder="可留空"></div>
@@ -112,7 +112,7 @@
       <label class="ck"><input id="gemfibrozil" type="checkbox"> 正在使用 Gemfibrozil（重要交互作用）</label>
       <label class="ck"><input id="drugInteractions" type="checkbox"> 有重要藥物交互作用，尚未完成核對</label>
     </div>
-    <div class="hint">本頁先核對 2026/09/01 起適用條文及 2025/09/01 PCSK9 條文；健保署 2026/10/29 已另發布修正公告，新增或變更之品項仍須藥師按該公告附件逐筆確認。台灣健保依 2.6.1／2.6.2／2.6.3／2.6.4 分開審核；特定產品代碼仍適用較舊的門檻。請依實際藥品、歷次處方與檢驗證據填寫，未查證不會顯示「可申報」。PCSK9 必須經事前審查核准。</div>
+    <div class="hint">本頁依健保署第二節給付規定（115.9.22 版：2.6.1 表一／表二／降 TG 表、2.6.2、2.6.3）、2.6.4 PCSK9（2025-09-01）及 2026-10-29 公告（2026-12-01 生效）逐條核對，並依今天日期自動套用。2026-12-01 起：Atova 10 mg（Yu Sheng）、Livalo 2 mg、Livalo OD 2 mg 移出表二（改適用表一）；Zovastin 10/10、10/20 與 Livazebe HD 移出 2.6.3 的 3 個月例外清單。輸入 10 碼 Statin 健保代碼時會自動比對表二清單。請依實際藥品、歷次處方與檢驗證據填寫，未查證不會顯示「可申報」。PCSK9 必須經事前審查核准。</div>
     <div class="fields">
       <div class="field wide"><label for="guide">主要顯示的 LDL-C 目標體系</label><select id="guide"><option value="tw">台灣 2025（臨床路徑）</option><option value="us">ACC/AHA 2026（美國）</option><option value="eu">ESC/EAS 2025（歐洲，概略估計）</option><option value="custom">醫師自訂 LDL-C 目標</option></select></div>
       <div class="field wide hidden" id="customWrap"><label for="customGoal">自訂 LDL-C 目標 (mg/dL；嚴格小於)</label><input id="customGoal" type="number" min="10" max="200" value="70"></div>
@@ -208,7 +208,7 @@
   <div class="section-head"><h2>使用與驗證注意事項</h2></div>
   <div class="card cardpad"><div class="note-list"><div class="note warn">本工具不是已通過醫療器材或院內臨床決策系統驗證的軟體，無法替代正式風險計算器、藥物交互作用資料庫或醫療專業判斷。</div><div class="note">本工具提供 PREVENT-ASCVD 10 年風險基礎模型內建計算，請與 AHA 官方計算器交叉核對；不提供 30 年、HF、總 CVD 或 HbA1c/UACR/SDI 選配模型。台灣風險因素判讀屬教學用途，0 項危險因子／透析者不強行套用台灣五級目標。</div><div class="note">HDL-C 若非實測，使用 TC−LDL-C−TG/5 反推值僅作探索性估算（須直接測量 LDL-C、TG <400 mg/dL），不能取代 HDL-C 檢驗或將 PREVENT 結果用作正式治療門檻。2026 ESC/ERA 透析者建議為 IIb/C；TG 高時部分 LDL-C 估算法可靠性下降。</div><div class="note warn">台灣健保部分藥物限制、給付門檻及核准適應症可能調整，沒有連結至即時健保資料庫，本工具不會宣稱任何病人「符合給付」。</div></div></div>
  </section>
- <div class="footer-note">LipidNavigator v3.1 · 健保初篩規則更新至 2026-11-07（新公告品項待最終查核） · 醫療專業教育／臨床決策輔助 · 繁體中文 · 全站離線可用 · 不儲存病人識別資料</div>
+ <div class="footer-note">LipidNavigator v3.2 · 健保規則依健保署原文核對至 2026-11-07（含 2026-12-01 生效異動） · 醫療專業教育／臨床決策輔助 · 繁體中文 · 全站離線可用 · 不儲存病人識別資料</div>
  </main>
 </div></div>
 <script>
@@ -240,6 +240,8 @@ function derive(p){
  }else if(risks.length>=2){res.tw={risk:'中風險',target:115,desc:risks.join('、')};}
  else if(risks.length===1){res.tw={risk:'低風險',target:130,desc:risks.join('、')};}
  else{res.tw={risk:'0 項危險因子',target:160,desc:'2026 健保 2.6.1 表一另列 0 項因子起始 ≥160、目標 <160；臨床目標依醫師分層'};}
+ // 健保表一 secondary (non-HDL-C) targets.
+ res.tw.nonHdl={55:85,70:100,100:130,115:145,130:160}[res.tw.target]??null;
  // US 2026: calculated PREVENT-ASCVD base estimates are used only with measured HDL-C and eligible primary-prevention profiles.
  if(p.ascvd){res.us={target:p.extreme?55:70,desc:p.extreme?'Very-high-risk ASCVD，建議 <55':'ASCVD 次級預防；若符合 very-high-risk 應改 <55'};}
  else if(p.dialysis){res.us={target:null,desc:'透析特殊情況：個別評估，非一般 PREVENT 族群'};}
@@ -313,24 +315,45 @@ function updatePreventDisplay(p,c){
 function evaluate(){const p=collect();const errors=validate(p);if(errors.length){alert(errors.join('\n'));return false;}const c=computePrevent(p);p.prevent=c.exploratory?null:c.pct;p.preventIsEstimated=c.exploratory;p.preventComputation=c;updatePreventDisplay(p,c);const r=derive(p);latest={p,r};renderResults();renderTrend();return true;}
 
 // Insurance decision support uses documented NHI thresholds, not foreign PREVENT targets.
-// Snapshot: 2026-09-01 NHI 2.6.1-2.6.3 + 2025-09-01 2.6.4; 2026-10-29 amendment needs item-code recheck.
+// Rechecked 2026-11-07 against NHI 第二節 (115.9.22 版, 2.6.1–2.6.4) and the 2026-10-29 公告 (健保審字第1150672925號, effective 2026-12-01).
 const NHI_URL='https://www.nhi.gov.tw/ch/cp-7593-ad2a9-3397-1.html';
 const NHI_2026_NOTICE='https://www.nhi.gov.tw/ch/cp-20681-3808b-3258-1.html';
 const NHI_PCSK9='https://www.nhi.gov.tw/ch/dl-87935-a92d568e54f046b3aee57e716c275399-1.pdf';
+const NHI_DEC_2026='2026-12-01';
+let NHI_AS_OF_OVERRIDE=null; // test hook: 'YYYY-MM-DD'
+const nhiAsOf=()=>NHI_AS_OF_OVERRIDE||new Date().toLocaleDateString('en-CA');
+const nhiDecRules=()=>nhiAsOf()>=NHI_DEC_2026;
+// 2.6.1 表二-only statin items (115/9/1 list, 116 codes). From 2026-12-01 three items move to 表一.
+const NHI_TABLE2_CODES_0901=['A042389100','A055967100','AA49288100','AA49543100','AA56739100','AA57774100','AA57802100','AA57843100','AA57950100','AA58648100','AB46029100','AB47348100','AB48586100','AB48644100','AB48681100','AB49021100','AB49454100','AB51732100','AB54967100','AB57772100','AB57940100','AB57967100','AB58049100','AC39307100','AC39403100','AC46402100','AC47907100','AC47924100','AC48469100','AC48608100','AC48813100','AC48879100','AC48926100','AC49190100','AC49226100','AC49360100','AC49672100','AC49699100','AC49841100','AC49997100','AC50086100','AC51598100','AC52301100','AC52530100','AC52581100','AC55268100','AC55272100','AC55583100','AC55895100','AC55952100','AC55956100','AC56319100','AC56629100','AC56682100','AC56804100','AC56806100','AC57126100','AC57130100','AC57133100','AC57267100','AC57741100','AC57803100','AC57805100','AC57809100','AC57930100','AC58041100','AC58067100','AC58078100','AC58098100','AC58207100','AC58211100','AC58262100','AC58270100','AC58282100','AC58384100','AC58517100','AC58525100','AC58526100','AC58622100','AC58633100','AC58969100','AC59192100','AC59193100','AC59266100','AC59398100','AC59649100','AC59652100','AC59887100','AC60114100','AC60174100','AC60197100','AC60290100','AC60561100','AC60836100','AC61795100','BA25200100','BA25201100','BA25337100','BC23556100','BC23596100','BC23597100','BC23970100','BC24129100','BC24339100','BC24391100','BC24392100','BC24597100','BC25350100','BC26147100','BC26169100','BC26543100','BC26544100','BC26900100','BC27002100','BC27781100','BC27782100'];
+const NHI_TABLE2_REMOVED_1201=['AC57930100','BC25350100','BC27002100'];
+const nhiTable2Codes=()=>nhiDecRules()?NHI_TABLE2_CODES_0901.filter(c=>!NHI_TABLE2_REMOVED_1201.includes(c)):NHI_TABLE2_CODES_0901;
+// 2.6.2 single-agent ezetimibe items needing 3 months of statin monotherapy (unchanged by the 2026-10-29 公告).
 const EZE_RESTRICTED=['AC60610100','BC27311100','BC28252100','BC26552100'];
-const COMBO_RESTRICTED=['AC59251100','AC60402100','BC28502100','AC62052100','AC62053100','AC62140100','AC62139100','BC28181100','BC28182100','BC28884100'];
+// 2.6.3 combination items needing 3 months; Zovastin 10/10, 10/20 and Livazebe HD leave the list on 2026-12-01.
+const COMBO_RESTRICTED_0901=['AC59251100','AC60402100','BC28502100','AC62052100','AC62053100','AC62140100','AC62139100','BC28181100','BC28182100','BC28884100'];
+const COMBO_REMOVED_1201=['AC62140100','AC62139100','BC28884100'];
+const comboRestricted=()=>nhiDecRules()?COMBO_RESTRICTED_0901.filter(c=>!COMBO_REMOVED_1201.includes(c)):COMBO_RESTRICTED_0901;
+const nhiCodeValid=c=>/^[A-Z][A-Z0-9][0-9]{8}$/.test(c);
+// Which 2.6.1 table applies: the selected one, or (when a valid code is entered) the one the code list implies.
+function nhiTableOf(p){
+ const listed=nhiCodeValid(p.nhiCode)?nhiTable2Codes().includes(p.nhiCode):null;
+ const byCode=listed===null?null:listed?'two':'one';
+ if(p.nhiTable==='unknown')return {table:byCode??'unknown',inferred:byCode!==null,mismatch:false};
+ return {table:p.nhiTable,inferred:false,mismatch:byCode!==null&&byCode!==p.nhiTable,byCode};
+}
 function nhiStatinThreshold(p,r){
- const tw=r.tw.risk;
+ const tw=r.tw.risk,tab=nhiTableOf(p).table;
  if(p.dialysis&&!p.ascvd)return {threshold:null,goal:null,why:'透析患者不以一般初級預防自動啟動藥物'};
  if(p.dialysis)return {threshold:null,goal:null,why:'透析與 ASCVD：需個別化，不能套一般分類'};
- if(p.nhiTable==='two'){
-  if(p.coronaryEventEvidence)return {threshold:70,goal:70,why:'表二：具 ACS／冠狀動脈 PCI／CABG 證據，起始 LDL-C ≥70'};
-  if(p.dm||p.ascvd)return {threshold:100,goal:100,why:'表二：糖尿病／已確立心血管疾病一般可依 LDL-C ≥100 或 TC ≥160 起始'};
+ if(tab==='two'){
+  if(p.coronaryEventEvidence)return {threshold:70,tc:null,goal:70,why:'表二：ACS 病史或冠狀動脈 PCI／CABG，起始 LDL-C ≥70（與非藥物治療並行）'};
+  if(p.dm||p.ascvd)return {threshold:100,tc:160,goal:100,why:'表二：心血管疾病或糖尿病，起始 TC ≥160 或 LDL-C ≥100（與非藥物治療並行）'};
   const risks=Number(p.htn)+Number((p.sex==='m'&&p.age>=45)||(p.sex==='f'&&p.age>=55))+Number(p.fhx)+Number(p.smoke)+Number(p.hdl!==null&&!p.hdlEstimated&&p.hdl<40);
-  return {threshold:risks>=2?130:risks===1?160:190,goal:risks>=2?130:risks===1?160:190,why:'表二：危險因子數與 3–6 月生活介入門檻；並需查驗 TC 衍生條件'};
+  const row=risks>=2?{threshold:130,tc:200}:risks===1?{threshold:160,tc:240}:{threshold:190,tc:null};
+  return {...row,goal:row.threshold,why:`表二：${risks} 個危險因子，起始 ${row.tc?`TC ≥${row.tc} 或 `:''}LDL-C ≥${row.threshold}；給藥前需 3–6 個月非藥物治療（女性停經者亦算年齡因子，本頁未自動計入）`};
  }
  const thresholds={'極高風險':55,'非常高風險':70,'高風險':100,'中風險':115,'低風險':130,'0 項危險因子':160};
- return {threshold:thresholds[tw]??null,goal:thresholds[tw]??null,why:`表一：${tw}，以 LDL-C 起始門檻分層（院內品項須核對）`};
+ return {threshold:thresholds[tw]??null,tc:null,goal:thresholds[tw]??null,why:`表一：${tw}，起始 LDL-C ≥${thresholds[tw]??'—'}（院內品項須核對）`};
 }
 function resultStatus(p,why,pending=[]){
  if(why)return {key:'notcovered',label:'目前未符給付條件',detail:why};
@@ -338,16 +361,22 @@ function resultStatus(p,why,pending=[]){
  return {key:'eligible',label:'初步符合條文門檻',detail:'仍須醫師／藥師確認健保品項、診斷與病歷證明；非事前核付。'};
 }
 function assessStatinNhi(p,r){
- const z=nhiStatinThreshold(p,r),pending=[];
+ const z=nhiStatinThreshold(p,r),t=nhiTableOf(p),pending=[];
  if(p.pregnancy||p.activeLiver)return resultStatus(p,'懷孕相關狀況或活動性肝病：不得以一般門檻直接建議開立。');
  if(z.threshold===null)return resultStatus(p,z.why);
- if(p.ldl<z.threshold && !(p.nhiTable==='two'&&p.tc!==null&&p.tc>=160&&(p.dm||p.ascvd)) && !(p.baseline!==null&&p.baseline>=z.threshold&&p.treat!=='none'))return resultStatus(p,`LDL-C ${format(p.ldl)} 低於目前選定的健保起始門檻 ${z.threshold} mg/dL；若為治療後數值須補原始檢驗。`);
- if(p.nhiTable==='unknown')pending.push('未確認院內品項屬表一或表二');
- if(!p.verifiedNhiCode)pending.push('未由院內藥師確認健保代碼及 2026-10-29 更新');
- if(p.baseline!==null&&p.baseline>=z.threshold&&p.ldl<z.threshold)pending.push('目前數值已低於起始門檻，需提供治療前檢驗證據以支持續用／加量');
- if(!/^[A-Z]{2}[A-Z0-9]{8,12}$/.test(p.nhiCode))pending.push('未輸入已核對的 Statin 健保藥品代碼');
- if(p.nhiTable==='two' && !p.ascvd && !p.dm && p.lifestyleMonths<3)pending.push('表二低中風險需 3–6 個月生活型態介入記錄');
- if(p.nhiTable!=='two' && ['中風險','低風險','0 項危險因子'].includes(r.tw.risk) && (p.lifestyleMonths===null||p.lifestyleMonths<3))pending.push('中低風險需有 3–6 個月生活型態介入紀錄');
+ const meetsTC=z.tc!=null&&p.tc!==null&&p.tc>=z.tc;
+ const meetsBaseline=p.baseline!==null&&p.baseline>=z.threshold&&p.treat!=='none';
+ if(p.ldl<z.threshold&&!meetsTC&&!meetsBaseline)return resultStatus(p,`LDL-C ${format(p.ldl)} 低於健保起始門檻 ${z.threshold} mg/dL${z.tc?`，TC 亦未達 ${z.tc}`:''}（${z.why}）；若為治療後數值須補原始檢驗。`);
+ if(t.table==='unknown')pending.push('未確認院內品項屬表一或表二');
+ if(t.inferred)pending.push(`依輸入代碼推定適用表${t.table==='two'?'二':'一'}（${nhiDecRules()?'2026-12-01 起':'2026-09-01 版'}表二清單），請藥師確認`);
+ if(t.mismatch)pending.push(`所選表別與代碼清單不符：${p.nhiCode} ${t.byCode==='two'?'列於':'不在'}表二清單`);
+ if(!p.verifiedNhiCode)pending.push('未由院內藥師確認健保代碼及 2026-10-29 公告（2026-12-01 生效）異動');
+ if(p.baseline!==null&&p.baseline>=z.threshold&&p.ldl<z.threshold&&!meetsTC)pending.push('目前數值已低於起始門檻，需提供治療前檢驗證據以支持續用／加量');
+ if(p.ldl<z.threshold&&meetsTC)pending.push(`以 TC ${format(p.tc)} ≥${z.tc} 符合表二起始條件，需保留 TC 原始檢驗`);
+ if(!nhiCodeValid(p.nhiCode))pending.push('未輸入已核對的 Statin 健保藥品代碼（10 碼）');
+ if(t.table==='two'&&!p.ascvd&&!p.dm&&!p.coronaryEventEvidence&&(p.lifestyleMonths===null||p.lifestyleMonths<3))pending.push('表二危險因子組給藥前需 3–6 個月非藥物治療紀錄');
+ if(t.table==='two'&&p.smoke&&!p.ascvd&&!p.dm)pending.push('表二：因吸菸而符合起始條件者，若未戒菸而要求藥物治療應自費');
+ if(t.table!=='two'&&['中風險','低風險','0 項危險因子'].includes(r.tw.risk)&&(p.lifestyleMonths===null||p.lifestyleMonths<3))pending.push('表一中／低風險給藥前需 3–6 個月生活型態改變紀錄');
  if(p.hdlEstimated)pending.push('HDL 為反推估計值，低 HDL 風險因素不能直接作申報佐證');
  if(p.dialysis)pending.push('透析患者需額外專科判斷');
  if(p.drugInteractions)pending.push('尚未確認相關交互作用');
@@ -359,8 +388,9 @@ function assessEzetimibeNhi(p,r,combo=false){
  if(combo&&p.lipidDiagnosis==='sito')failed.push('植物固醇血症未列入 2.6.3 複方核准病種');
  if(p.ezeCode.length<8)pending.push('Ezetimibe／複方健保代碼未輸入');
  if(!p.verifiedNhiCode)pending.push('未由院內藥師核實該產品健保代碼、適用條款與最新版異動');
- const recognized=[...EZE_RESTRICTED,...COMBO_RESTRICTED];
- const knownRestricted=(combo?COMBO_RESTRICTED:EZE_RESTRICTED).includes(p.ezeCode);
+ const recognized=[...EZE_RESTRICTED,...COMBO_RESTRICTED_0901];
+ const knownRestricted=(combo?comboRestricted():EZE_RESTRICTED).includes(p.ezeCode);
+ if(combo&&COMBO_REMOVED_1201.includes(p.ezeCode))pending.push(nhiDecRules()?'此複方代碼自 2026-12-01 起已移出 3 個月例外清單，適用 6–8 週規定':'此複方代碼 2026-12-01 起移出 3 個月例外清單；在此之前仍需 Statin 單方 3 個月');
  if(p.ezeCode && recognized.includes(p.ezeCode) && !knownRestricted)failed.push('選定的健保代碼屬不同製劑類別，請核對');
  if(p.ezeCategory==='unknown')pending.push('未確認該品項適用 6–8 週或 3 個月試用規定');
  if(knownRestricted && p.ezeCategory!=='restricted')pending.push('此健保代碼屬 3 個月例外清單，請修正品項分類');
@@ -370,7 +400,7 @@ function assessEzetimibeNhi(p,r,combo=false){
  if(p.statinIntol&&!p.intolDocumented)pending.push('Statin 不耐受須有藥物不良反應或禁忌相關正式紀錄');
  if(!intol && (p.statinWeeks===null||p.statinWeeks<needWeeks))pending.push(`需要 Statin 單方治療 ≥${needWeeks} 週（依品項不同；已有 ${p.statinWeeks??'未知'} 週）及治療未達標證明`);
  if(intol&&combo)failed.push('若無法耐受 Statin，Statin/Ezetimibe 複方不宜直接推薦');
- if(!intol&&p.nhiTable==='unknown')pending.push('須佐證符合 2.6.1 治療目標及未達標');
+ if(!intol&&nhiTableOf(p).table==='unknown')pending.push('須佐證符合 2.6.1 治療目標及未達標');
  if(!intol&&r.tw.target!==null&&p.ldl<r.tw.target)failed.push('已達台灣 LDL-C 目標，未證實符合加成給付的「未達目標」條件');
  if(p.pregnancy||p.activeLiver||p.gemfibrozil&&combo)failed.push('有重大安全限制或複方不可與 gemfibrozil 併用');
  return resultStatus(p,failed.join('；')||null,pending);
@@ -390,7 +420,8 @@ function assessPcsk9Nhi(p){
  const intol=p.statinIntol&&p.intolDocumented;
  if(p.statinIntol&&!p.intolDocumented)pending.push('Statin 不耐受尚無病歷證明');
  if(!intol){
-  if(!p.maxStatin)pending.push('未證實為高強度／最大耐受 Statin');
+  const highDose=statinIntensity(p.statinDrug,p.statinDose)==='high'&&['atorvastatin','rosuvastatin'].includes(p.statinDrug);
+  if(!p.maxStatin&&!highDose)pending.push('未證實為高強度 Statin（如 rosuvastatin 20 mg 或 atorvastatin ≥40 mg）或病人可耐受之最大劑量');
   if(p.statinWeeks===null||p.statinWeeks<13)pending.push('最大耐受 Statin 單方需至少 3 個月');
   if(p.ezeWeeks===null||p.ezeWeeks<13)pending.push('續加 Ezetimibe 10 mg 至少 3 個月（需有序貫療程紀錄）');
  }else if(p.ezeWeeks===null||p.ezeWeeks<13)pending.push('禁忌／不耐受途徑：Ezetimibe 10 mg 治療至少 3 個月');
@@ -439,7 +470,7 @@ function renderIndividualRx(p,r){
     }
     if(p.treat==='statineze'||p.ldl>100){
      const pc=assessPcsk9Nhi(p);
-     cards.push(rxBlock('PCSK9 mAb（僅在符合事審資格時）','Evolocumab 140 mg SC q2w；或 Alirocumab 75–150 mg SC q2w', '此為達標困難時的條件式後線選項；NHI 並非所有 ASCVD 或 LDL-C >100 者均可使用，須先有指定重大事件及完整前治療紀錄。',pc,'2.6.4 + 附表二-D',['重大事件一年內、最大耐受 Statin 3 個月後續加 Ezetimibe 3 個月，或有證實不耐受途徑','LDL-C >100 mg/dL；先審核准，每次最長 12 個月','續用若 LDL-C 較用藥前下降未達 30% 則不再給付']));
+     cards.push(rxBlock('PCSK9 mAb（僅在符合事審資格時）','Evolocumab 140 mg SC q2w；或 Alirocumab 75–150 mg SC q2w', '此為達標困難時的條件式後線選項；NHI 並非所有 ASCVD 或 LDL-C >100 者均可使用，須先有指定重大事件及完整前治療紀錄。',pc,'2.6.4 + 附表二-D',['重大事件（MI／冠狀動脈或其他動脈再通術／動脈硬化相關缺血性中風）後一年內','高強度或最大耐受 Statin ≥3 個月，之後合併 Ezetimibe 10 mg ≥3 個月，LDL-C 仍 >100 mg/dL','Statin 禁忌（藥物過敏、活動性肝病）或確診不耐受：Ezetimibe 持續 3 個月仍 >100 mg/dL','不耐受認定（附表二-D）：嚴重橫紋肌溶解一種 Statin 即可；否則需 myalgia score >8 且兩種 Statin 皆不耐受，其中一種在最低有效劑量','事前審查核准，每次 12 個月；續用需 LDL-C 較用藥前下降 ≥30%','每兩週最多 1 支，兩種 PCSK9 mAb 不可併用']));
     }
   }else{messages.push('目前治療分類不完整；請填寫實際 Statin 藥名／劑量、Ezetimibe 療程再選擇下一步。');}
   if(p.statinIntol&&p.treat!=='statineze'&&p.treat!=='pcsk9'){const ez=assessEzetimibeNhi(p,r,false);cards.push(rxBlock('Statin 不耐受：Ezetimibe','Ezetimibe 10 mg PO qd（禁忌症／不耐受證實後）','先評估是否為真正不耐受、可否降低劑量或換藥；不耐受不等於所有非 Statin 自動健保給付。',ez,'2.6.2',['保留 severe myalgia／myositis 等病歷證據','不得以單純自述取代不耐受佐證']));}
@@ -464,7 +495,7 @@ function renderIndividualRx(p,r){
  if(inten&&['low','moderate','high'].includes(p.treat)&&inten!==p.treat)messages.push(`劑量對應強度不一致：${p.statinDrug} ${format(p.statinDose)} mg/day 屬${intenLabel[inten]}強度，但治療分類選「${intenLabel[p.treat]}強度」；請核對。`);
  if(p.statinDrug==='unknown'&&p.treat!=='none')messages.push('實際 Statin 藥名或劑量未核實：處方僅為選擇候選項，不能當作已核准的換藥醫囑。');
  if(p.hdlEstimated)messages.push('HDL-C 僅由數學關係反推；不可據此證明健保危險因子或填報正式 PREVENT 風險。');
- messages.push('健保 2.6.1 表一／表二品項和 2.6.2／2.6.3 個別例外清單需核對院內健保代碼；2026-10-29 健保署另有修訂公告，個別品項需再查最新版。');
+ messages.push(`健保規則套用：${nhiDecRules()?'2026-12-01 起版本（含 2026-10-29 公告異動）':'2026-09-01 版本；2026-10-29 公告之品項異動自 2026-12-01 生效'}。表別與例外清單仍須藥師以院內健保代碼核對。`);
  $('rxSummary').textContent=messages.join(' ');
  $('individualRx').innerHTML=cards.length?cards.join(''):makeNote('warn','此時不產生新處方','目前已達標、缺少必要資訊或存在安全限制；請核實後再評估。');
 }
@@ -472,7 +503,7 @@ function renderResults(){const {p,r}=latest;const target=r.selected.target;const
  const guideNames={tw:'台灣 2025',us:'ACC/AHA 2026',eu:'ESC/EAS 2025',custom:'醫師自訂'};$('goalSource').textContent=guideNames[p.guide];$('targetMain').innerHTML=target!==null?`&lt;${format(target)}<em>mg/dL</em>`:'待評估<em>需要臨床分層</em>';
  $('riskLabel').textContent=p.guide==='tw'?r.tw.risk+'｜'+r.tw.desc:r.selected.desc;$('metricLDL').textContent=format(p.ldl);$('metricDrop').textContent=reduction===null?'尚無基線':format(reduction)+'%';$('metricRisk').textContent=r.tw.risk;$('metricRiskDetail').textContent=r.risks.join('、')||'無已勾選危險因子';$('metricTG').textContent=format(p.tg);$('metricTGDetail').textContent=p.tg>=1000?'重度，胰臟炎危險':p.tg>=500?'嚴重升高':p.tg>=150?'升高':'未升高';$('riskCount').textContent='危險因子 '+r.riskCount+' 項';
  $('progressBar').style.width=target!==null?`${Math.max(4,Math.min(100,100*(target/p.ldl)))}%`:'0%';$('statusText').textContent=target===null?'需補充風險評估':isGoal?'已達 LDL-C 目標':'未達 LDL-C 目標';$('deltaText').textContent=target===null?'':isGoal?'低於目標 '+format(target-p.ldl)+' mg/dL':'差距約 '+format(delta)+' mg/dL';
- const rows=[['台灣 2025',r.tw],['ACC/AHA 2026',r.us],['ESC/EAS 2025',r.eu]];$('compareRows').innerHTML=rows.map(([name,x])=>`<tr><td><strong>${name}</strong></td><td><span class="c-val">${x.target===null?'待完整分層':'&lt;'+format(x.target)+' mg/dL'}</span></td><td>${escapeHTML(x.desc)}</td></tr>`).join('');
+ const rows=[['台灣 2025',r.tw],['ACC/AHA 2026',r.us],['ESC/EAS 2025',r.eu]];$('compareRows').innerHTML=rows.map(([name,x])=>`<tr><td><strong>${name}</strong></td><td><span class="c-val">${x.target===null?'待完整分層':'&lt;'+format(x.target)+' mg/dL'}</span>${x.nonHdl?`<br><span class="tiny">non-HDL-C &lt;${x.nonHdl}${p.tc!==null&&p.hdl!==null&&!p.hdlEstimated?`（目前 ${format(p.tc-p.hdl)}）`:''}</span>`:''}</td><td>${escapeHTML(x.desc)}</td></tr>`).join('');
  let al=[];if(target!==null)al.push(makeNote(isGoal?'ok':'warn',isGoal?'LDL-C 已達顯示目標':'LDL-C 尚未達顯示目標',isGoal?'仍須依整體風險、用藥耐受性及相對降幅持續追蹤。':`目前 ${format(p.ldl)} mg/dL；顯示目標 <${format(target)} mg/dL，需考慮強化治療。`));
  if(p.tg>=1000)al.push(makeNote('danger','TG ≥1000：胰臟炎風險','優先處理嚴重高 TG、血糖、酒精與次發性原因；需要積極飲食和藥物評估。'));else if(p.tg>=500)al.push(makeNote('warn','TG ≥500：評估胰臟炎預防','考慮限脂飲食、次發性原因及降 TG 藥物；CKD 需評估 Fibrate 安全性。'));
  if(p.tg>=400)al.push(makeNote('warn','高 TG 可能影響 LDL-C 計算','若使用 Friedewald 估算法，TG 偏高時可靠性不足，可考慮直接 LDL-C／non-HDL-C／ApoB。'));

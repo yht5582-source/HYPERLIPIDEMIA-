@@ -22,6 +22,21 @@ const R=await pg.evaluate(()=>{const o={};
  document.getElementById('resetBtn').click();o.resetHtn=document.getElementById('htn').checked;
  // US guide with no PREVENT target falls back to Taiwan goal for drug steps
  loadCase(0);document.getElementById('preventExcluded').checked=true;document.getElementById('guide').value='us';evaluate();o.usSum=document.getElementById('rxSummary').textContent;
+ // --- 健保 rules (rechecked 2026-11-07) ---
+ NHI_AS_OF_OVERRIDE='2026-11-07';o.t2a=nhiTable2Codes().length;o.ca=comboRestricted().length;
+ loadCase(0);let q=collect();q.nhiCode='AC57930100';o.infA=nhiTableOf(q).table;
+ NHI_AS_OF_OVERRIDE='2026-12-01';o.t2b=nhiTable2Codes().length;o.cb=comboRestricted().length;o.infB=nhiTableOf(q).table;
+ // 表二 TC alternative: 2 risk factors (HTN, smoking, man 56), LDL 120 < 130 but TC 210 ≥ 200
+ q={...collect(),nhiTable:'two',ldl:120,baseline:null,tc:210,dm:false,ascvd:false};let rr=derive(q);o.tcOk=assessStatinNhi(q,rr).key;
+ q.tc=190;o.tcNo=assessStatinNhi(q,rr).key;
+ // mismatch: table one selected but code is 表二-only
+ q={...collect(),nhiTable:'one',nhiCode:'BC24129100'};o.mis=assessStatinNhi(q,derive(q)).detail;
+ // combo Livazebe HD after 12-01 needs 8 weeks, not 13
+ q={...collect(),treat:'high',ezeCode:'BC28884100',ezeCategory:'standard',statinWeeks:9,lipidDiagnosis:'primary',verifiedNhiCode:true,ldl:150};
+ o.comboDec=assessEzetimibeNhi(q,derive(q),true).detail;NHI_AS_OF_OVERRIDE='2026-11-07';o.comboNov=assessEzetimibeNhi(q,derive(q),true).detail;
+ // PCSK9: atorvastatin 40 counts as high-intensity without the max-statin checkbox
+ q={...collect(),ascvd:true,ldl:120,statinDrug:'atorvastatin',statinDose:40,maxStatin:false,statinWeeks:14,ezeWeeks:14,eventType:'mi',eventDate:'2026-06-01'};
+ o.pc=assessPcsk9Nhi(q).detail;NHI_AS_OF_OVERRIDE=null;
  return o;});
 ok(Math.abs(R.pf-9.20)<0.01,'PREVENT female 9.20 got '+R.pf);ok(Math.abs(R.pm-10.19)<0.01,'PREVENT male 10.19 got '+R.pm);
 ok(R.ascvd===null&&R.cac===null&&R.ldl190===null,'PREVENT exclusions');
@@ -35,6 +50,13 @@ ok(!/建議初始藥物/.test(R.other),'other treatment no initial card');
 ok(!/\*\*/.test(R.pcsk),'no markdown asterisks');
 ok(R.resetHtn===true,'reset restores defaults');
 ok(/暫依台灣 2025/.test(R.usSum),'US fallback note');
+ok(R.t2a===116&&R.t2b===113,'table2 list sizes '+R.t2a+'/'+R.t2b);
+ok(R.ca===10&&R.cb===7,'combo restricted sizes '+R.ca+'/'+R.cb);
+ok(R.infA==='two'&&R.infB==='one','Atova 10 moves to table one on 12-01');
+ok(R.tcOk!=='notcovered'&&R.tcNo==='notcovered','table two TC alternative '+R.tcOk+'/'+R.tcNo);
+ok(/不符/.test(R.mis),'table/code mismatch flagged');
+ok(!/≥13 週/.test(R.comboDec)&&/≥13 週/.test(R.comboNov),'Livazebe HD 3-month rule ends 12-01');
+ok(!/未證實為高強度/.test(R.pc),'atorva 40 counts as high intensity for PCSK9');
 ok(errs.length===0,'page errors/dialogs: '+errs.join(' | '));
 // mobile: no horizontal overflow
 await pg.setViewportSize({width:375,height:812});const ov=await pg.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);ok(ov<=0,'mobile overflow '+ov);
