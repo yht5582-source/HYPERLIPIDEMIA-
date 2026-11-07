@@ -47,6 +47,7 @@ const R=await pg.evaluate(()=>{const o={};
  document.getElementById('mindReview').click();const z=document.querySelector('.cz');o.czHidden=getComputedStyle(z).color==='rgba(0, 0, 0, 0)';z.click();o.czShown=getComputedStyle(z).color!=='rgba(0, 0, 0, 0)';
  document.querySelector('[data-done="m1"]').click();o.mProg=document.getElementById('mindProgressText').textContent;
  o.pita=statinIntensity('pitavastatin',1);
+ document.getElementById('expandMind').click();o.openAll=document.querySelectorAll('#mindMap details[open]').length;document.getElementById('collapseMind').click();o.openAfter=document.querySelectorAll('#mindMap details[open]').length;o.sticky=getComputedStyle(document.querySelector('.mind-toolbar')).position;
  return o;});
 ok(Math.abs(R.pf-9.20)<0.01,'PREVENT female 9.20 got '+R.pf);ok(Math.abs(R.pm-10.19)<0.01,'PREVENT male 10.19 got '+R.pm);
 ok(R.ascvd===null&&R.cac===null&&R.ldl190===null,'PREVENT exclusions');
@@ -72,6 +73,7 @@ ok(R.mVis>=4&&R.mMarks>=5&&R.mHitsAll,'mind search 透析 '+R.mVis+'/'+R.mMarks+
 ok(R.mEmpty&&R.mAllBack,'mind search empty/reset');
 ok(R.czHidden&&R.czShown,'review mode cloze');
 ok(/1 \/ 9/.test(R.mProg),'mind progress');
+ok(R.openAll===46&&R.openAfter===0&&R.sticky==='sticky','collapse-all button '+R.openAll+'/'+R.openAfter+'/'+R.sticky);
 ok(R.pita==='moderate','pitavastatin 1 mg moderate');
 ok(errs.length===0,'page errors/dialogs: '+errs.join(' | '));
 // mobile: no horizontal overflow
