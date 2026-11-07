@@ -37,6 +37,16 @@ const R=await pg.evaluate(()=>{const o={};
  // PCSK9: atorvastatin 40 counts as high-intensity without the max-statin checkbox
  q={...collect(),ascvd:true,ldl:120,statinDrug:'atorvastatin',statinDose:40,maxStatin:false,statinWeeks:14,ezeWeeks:14,eventType:'mi',eventDate:'2026-06-01'};
  o.pc=assessPcsk9Nhi(q).detail;NHI_AS_OF_OVERRIDE=null;
+ // --- mind map ---
+ showView('mind');o.mb=document.querySelectorAll('.mbranch').length;o.mn=document.querySelectorAll('.mnode').length;o.mp=document.querySelectorAll('.mnode li').length;
+ const ms=document.getElementById('mindSearch');ms.value='透析';ms.dispatchEvent(new Event('input'));
+ o.mVis=[...document.querySelectorAll('.mbranch')].filter(b=>!b.hidden).length;o.mMarks=document.querySelectorAll('#mindMap mark').length;
+ o.mHitsAll=[...document.querySelectorAll('.mnode li')].filter(l=>l.textContent.includes('透析')).every(l=>!l.hidden&&!l.closest('[hidden]'));
+ ms.value='zzzz';ms.dispatchEvent(new Event('input'));o.mEmpty=!document.getElementById('mindEmpty').hidden;ms.value='';ms.dispatchEvent(new Event('input'));
+ o.mAllBack=[...document.querySelectorAll('.mbranch,.mnode,.mnode li')].every(x=>!x.hidden);
+ document.getElementById('mindReview').click();const z=document.querySelector('.cz');o.czHidden=getComputedStyle(z).color==='rgba(0, 0, 0, 0)';z.click();o.czShown=getComputedStyle(z).color!=='rgba(0, 0, 0, 0)';
+ document.querySelector('[data-done="m1"]').click();o.mProg=document.getElementById('mindProgressText').textContent;
+ o.pita=statinIntensity('pitavastatin',1);
  return o;});
 ok(Math.abs(R.pf-9.20)<0.01,'PREVENT female 9.20 got '+R.pf);ok(Math.abs(R.pm-10.19)<0.01,'PREVENT male 10.19 got '+R.pm);
 ok(R.ascvd===null&&R.cac===null&&R.ldl190===null,'PREVENT exclusions');
@@ -57,6 +67,12 @@ ok(R.tcOk!=='notcovered'&&R.tcNo==='notcovered','table two TC alternative '+R.tc
 ok(/不符/.test(R.mis),'table/code mismatch flagged');
 ok(!/≥13 週/.test(R.comboDec)&&/≥13 週/.test(R.comboNov),'Livazebe HD 3-month rule ends 12-01');
 ok(!/未證實為高強度/.test(R.pc),'atorva 40 counts as high intensity for PCSK9');
+ok(R.mb===9&&R.mn>=35&&R.mp>=140,'mind map size '+R.mb+'/'+R.mn+'/'+R.mp);
+ok(R.mVis>=4&&R.mMarks>=5&&R.mHitsAll,'mind search 透析 '+R.mVis+'/'+R.mMarks+'/'+R.mHitsAll);
+ok(R.mEmpty&&R.mAllBack,'mind search empty/reset');
+ok(R.czHidden&&R.czShown,'review mode cloze');
+ok(/1 \/ 9/.test(R.mProg),'mind progress');
+ok(R.pita==='moderate','pitavastatin 1 mg moderate');
 ok(errs.length===0,'page errors/dialogs: '+errs.join(' | '));
 // mobile: no horizontal overflow
 await pg.setViewportSize({width:375,height:812});const ov=await pg.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);ok(ov<=0,'mobile overflow '+ov);

@@ -24,6 +24,41 @@
 .rx-source{font-size:11px;margin-top:7px}
 @media print{.rx-item{break-inside:avoid}.rx-panel{break-inside:avoid}}
 @media(max-width:420px){.checkgrid,.fields{grid-template-columns:1fr}.field.wide{grid-column:1}.score-num{font-size:44px}.action-row>button{flex:1 1 100%}}
+
+/* v3.3 mind map */
+.mind-toolbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin:4px 0 14px}
+.mind-toolbar input[type=search]{flex:1 1 260px;height:40px;border:1px solid #d4e0eb;border-radius:10px;padding:0 12px;background:#fff}
+.mind-toggle{font-weight:700}
+.mind-hub{display:grid;grid-template-columns:minmax(200px,260px) 1fr;gap:18px;align-items:center}
+.mind-center{background:linear-gradient(135deg,#123a58,#13707b);color:#fff;border-radius:16px;padding:20px;text-align:center}
+.mind-center span{display:block;font-size:22px;font-weight:850}.mind-center small{display:block;margin-top:6px;color:#cfe8ee;font-size:11px;line-height:1.6}
+.mind-chips{display:flex;flex-wrap:wrap;gap:8px}
+.mind-chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 12px;font-size:12px;font-weight:750;color:var(--ink);display:inline-flex;gap:6px;align-items:center}
+.mind-chip i{font-style:normal;color:var(--c)}.mind-chip.done{background:#ebf8f1;border-color:#9fd8bc}
+.mind-progress{grid-column:1/-1;display:flex;gap:12px;align-items:center;font-size:12px;color:var(--muted)}
+.mind-progress>div{flex:1;height:7px;background:#e6eef3;border-radius:9px;overflow:hidden}.mind-progress>div>div{height:100%;width:0;background:#2fae8a;transition:width .3s}
+.mind-quick{margin:14px 0}
+.mind-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px;align-items:start}
+.mbranch{border:1px solid var(--line);border-top:4px solid var(--c);background:#fff;border-radius:15px;box-shadow:var(--shadow)}
+.mbranch>summary{list-style:none;cursor:pointer;padding:15px 17px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 11px;align-items:center}
+.mbranch>summary::-webkit-details-marker,.mnode>summary::-webkit-details-marker{display:none}
+.mb-icon{grid-row:span 2;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);font-weight:850;font-size:17px}
+.mb-title{font-weight:800;font-size:15px;color:#173550}.mb-sum{font-size:11px;color:var(--muted);grid-column:2}
+.mb-count{grid-row:span 2;font-size:11px;color:var(--c);font-weight:800;white-space:nowrap}
+.mbranch[open]>summary{border-bottom:1px solid #edf2f6}
+.mb-body{padding:8px 17px 15px}
+.mnode{border-left:2px solid color-mix(in srgb,var(--c) 40%,#fff);margin:9px 0 0 6px;padding-left:12px}
+.mnode>summary{list-style:none;cursor:pointer;font-weight:750;font-size:13px;color:#1f4b63;display:flex;gap:7px;align-items:center;padding:3px 0}
+.mnode>summary:before{content:'+';display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);font-size:14px;flex:none}
+.mnode[open]>summary:before{content:'−'}
+.mnode ul{margin:5px 0 4px;padding-left:18px}.mnode li{font-size:12.5px;color:#46637a;line-height:1.7;margin:3px 0}
+.cz{font-weight:800;color:#0a6f73;border-radius:4px;padding:0 2px}
+.mind-review .cz:not(.show){color:transparent;background:#d9e6ee;cursor:pointer;user-select:none}
+.mind-review .cz:not(.show):hover{background:#c6dbe7}
+.mb-done{display:flex;gap:7px;align-items:center;font-size:12px;color:#2c6a54;margin-top:12px;font-weight:700}
+.mind-grid mark{background:#fff0a8;border-radius:3px;padding:0 1px}
+@media(max-width:900px){.mind-grid,.mind-hub{grid-template-columns:1fr}}
+@media print{.mind-grid{display:block}.mbranch{break-inside:avoid;margin-bottom:10px}}
 </style>
 </head>
 <body>
@@ -192,14 +227,30 @@
   <div id="questionList"></div><div class="card cardpad hidden" id="quizResult" style="margin-top:13px"></div>
  </section>
  <section class="view" id="mind">
-  <div class="hero"><div><span class="eyebrow">INTERACTIVE MIND MAP</span><h1>血脂診療心智圖</h1><p>每個分支可獨立展開與收合，不會跳離頁面；可作為住院醫師查房或教學快速索引。</p></div><div class="hero-tag">◆ COLLAPSIBLE</div></div>
-  <div class="section-head"><h2>診斷 → 分層 → 治療 → 追蹤</h2><div class="action-row" style="margin:0"><button class="secondary" type="button" id="expandMind">全部展開</button><button class="light-btn" type="button" id="collapseMind">全部收合</button></div></div>
-  <details class="mindt" open><summary>① 初始評估與次發性血脂異常</summary><div class="mindbody"><p>血脂檢驗：LDL-C、TG、HDL-C、non-HDL-C；必要時 ApoB、Lp(a)。確認家族史、早發 ASCVD、藥物、飲食、酒精、甲狀腺、肝膽、腎病症候群、糖尿病控制。</p><p>LDL-C ≥190：高度懷疑嚴重高膽固醇血症／FH；TG ≥500：胰臟炎風險；TG ≥1000：優先積極處理。</p></div></details>
-  <details class="mindt"><summary>② 心血管風險分層</summary><div class="mindbody"><p>確認是否已有 ASCVD（次級預防）→ 是否符合極高風險條件；否則依 DM、CKD、LDL-C ≥190、CAC 及傳統風險因子評估初級預防。</p><p>ACC/AHA 2026：適用族群使用 PREVENT 10 年風險 &lt;3／3–&lt;5／5–&lt;10／≥10%；ESC/EAS 使用 SCORE2／SCORE2-OP；台灣 2025 使用五級風險定義。</p></div></details>
-  <details class="mindt"><summary>③ 設定 LDL-C 目標</summary><div class="mindbody"><p>台灣 2025：低／中／高／非常高／極高風險依序 &lt;130／&lt;115／&lt;100／&lt;70／&lt;55 mg/dL。</p><p>美國 2026：非常高風險 ASCVD &lt;55；其他 ASCVD 常為 &lt;70；糖尿病依風險採適當中／高強度 Statin，特定高風險目標 &lt;70。</p><p>歐洲 2025：維持 2019 LDL-C 目標，高風險 &lt;70、非常高風險 &lt;55，並需視情況 LDL-C 下降 ≥50%。</p></div></details>
-  <details class="mindt"><summary>④ 藥物與強度選擇</summary><div class="mindbody"><p>Statin 中／高強度 → 評估 LDL-C 殘餘差距 → 加 Ezetimibe → 極高風險未達標評估 PCSK9 抑制劑。Statin 不耐受可評估其他藥物和再挑戰策略。</p><p>嚴重高 TG 並行處理低脂飲食、酒精禁忌、血糖及次發性原因，必要時使用降 TG 治療。</p></div></details>
-  <details class="mindt"><summary>⑤ CKD、透析與移植</summary><div class="mindbody"><p>未透析 CKD G3–G5：依 KDIGO 2024 和 ESC/ERA 2026，通常採 Statin 為基礎，依指引與患者情況選擇合併 Ezetimibe。</p><p>長期透析：不例行對全部病人新啟動 Statin；若有 ASCVD 或計畫移植，2026 ESC/ERA 允許個別考慮，須確認證據等級。</p></div></details>
-  <details class="mindt"><summary>⑥ 療效評估、長期追蹤、健保核實</summary><div class="mindbody"><p>起始或調整後 4–12 週複查血脂 → 達標與相對降幅雙指標 → 安全性與遵從性 → 未達標優化；穩定後定期追蹤。</p><p>台灣處方需分別確認「學會建議」「TFDA 核准適應症」「健保給付條件」，此三者不得視為相同。</p></div></details>
+  <div class="hero"><div><span class="eyebrow">INTERACTIVE MIND MAP</span><h1>血脂診療心智圖</h1><p>9 大分支、37 個主題、約 145 個要點：評估、台灣與國際分層、Statin 與非 Statin 藥物、高 TG、特殊族群、健保給付與考點。可搜尋、逐層展開，「複習模式」會遮住關鍵數字供自我測驗。</p></div><div class="hero-tag">◆ REVIEW MODE</div></div>
+  <div class="mind-toolbar no-print">
+   <input id="mindSearch" type="search" placeholder="搜尋關鍵字，例如 透析、rosuvastatin、表二" aria-label="搜尋心智圖">
+   <label class="ck mind-toggle"><input id="mindReview" type="checkbox"> 複習模式（遮住關鍵數字，點擊顯示）</label>
+   <div class="action-row" style="margin:0"><button class="secondary" type="button" id="expandMind">全部展開</button><button class="light-btn" type="button" id="collapseMind">全部收合</button><button class="light-btn" type="button" id="revealMind">顯示全部答案</button></div>
+  </div>
+  <div class="mind-hub card cardpad">
+   <div class="mind-center"><span>高脂血症</span><small>診斷 → 分層 → 目標 → 治療 → 特殊族群 → 健保 → 追蹤</small></div>
+   <div class="mind-chips" id="mindChips"></div>
+   <div class="mind-progress"><span id="mindProgressText">已複習 0 / 9 分支</span><div><div id="mindProgressBar"></div></div></div>
+  </div>
+  <details class="calc-details mind-quick" open><summary>核心數字速查</summary>
+   <div style="overflow-x:auto"><table class="medicine-table"><thead><tr><th>項目</th><th>重點數字</th></tr></thead><tbody>
+    <tr><td>台灣 LDL-C 目標</td><td>極高 &lt;55｜非常高 &lt;70｜高 &lt;100｜中 &lt;115｜低 &lt;130｜0 因子 &lt;160（non-HDL-C 85／100／130／145／160）</td></tr>
+    <tr><td>ESC/EAS 目標</td><td>非常高 &lt;55 且 ↓≥50%｜高 &lt;70 且 ↓≥50%｜中 &lt;100｜低 &lt;116</td></tr>
+    <tr><td>PREVENT-ASCVD 10 年</td><td>&lt;3% 低｜3–&lt;5% 邊緣｜5–&lt;10% 中度｜≥10% 高</td></tr>
+    <tr><td>高強度 Statin</td><td>Atorvastatin 40–80 mg｜Rosuvastatin 20–40 mg（LDL-C ↓≥50%）</td></tr>
+    <tr><td>TG</td><td>≥150 升高｜≥500 嚴重｜≥1000 胰臟炎高風險｜Friedewald 不適用 ≥400</td></tr>
+    <tr><td>Lp(a)</td><td>ESC &gt;105 nmol/L｜ACC/AHA ≥125 nmol/L｜一生至少測一次</td></tr>
+    <tr><td>健保 PCSK9</td><td>事件後一年內｜Statin ≥3 月 + Ezetimibe ≥3 月｜LDL-C &gt;100｜事審 12 月｜續用需 ↓≥30%</td></tr>
+   </tbody></table></div>
+  </details>
+  <div class="mind-grid" id="mindMap"></div>
+  <p class="fineprint" id="mindEmpty" hidden>沒有符合的內容。</p>
  </section>
  <section class="view" id="sources">
   <div class="hero"><div><span class="eyebrow">GUIDELINES & REFERENCES</span><h1>指引版本與限制</h1><p>來源以官方學會文件與期刊原文為主。版本日期及規則適用範圍均明列，供臨床核對。</p></div><div class="hero-tag">◆ VERIFIED SOURCES</div></div>
@@ -208,7 +259,7 @@
   <div class="section-head"><h2>使用與驗證注意事項</h2></div>
   <div class="card cardpad"><div class="note-list"><div class="note warn">本工具不是已通過醫療器材或院內臨床決策系統驗證的軟體，無法替代正式風險計算器、藥物交互作用資料庫或醫療專業判斷。</div><div class="note">本工具提供 PREVENT-ASCVD 10 年風險基礎模型內建計算，請與 AHA 官方計算器交叉核對；不提供 30 年、HF、總 CVD 或 HbA1c/UACR/SDI 選配模型。台灣風險因素判讀屬教學用途，0 項危險因子／透析者不強行套用台灣五級目標。</div><div class="note">HDL-C 若非實測，使用 TC−LDL-C−TG/5 反推值僅作探索性估算（須直接測量 LDL-C、TG <400 mg/dL），不能取代 HDL-C 檢驗或將 PREVENT 結果用作正式治療門檻。2026 ESC/ERA 透析者建議為 IIb/C；TG 高時部分 LDL-C 估算法可靠性下降。</div><div class="note warn">台灣健保部分藥物限制、給付門檻及核准適應症可能調整，沒有連結至即時健保資料庫，本工具不會宣稱任何病人「符合給付」。</div></div></div>
  </section>
- <div class="footer-note">LipidNavigator v3.2 · 健保規則依健保署原文核對至 2026-11-07（含 2026-12-01 生效異動） · 醫療專業教育／臨床決策輔助 · 繁體中文 · 全站離線可用 · 不儲存病人識別資料</div>
+ <div class="footer-note">LipidNavigator v3.3 · 健保規則依健保署原文核對至 2026-11-07（含 2026-12-01 生效異動） · 醫療專業教育／臨床決策輔助 · 繁體中文 · 全站離線可用 · 不儲存病人識別資料</div>
  </main>
 </div></div>
 <script>
@@ -219,10 +270,10 @@ const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const makeNote=(type,title,text)=>`<div class="note ${type}"><div><strong>${escapeHTML(title)}</strong>${escapeHTML(text)}</div></div>`;
 let latest=null, followRecords=[], quizLevel='resident', hdlEstimated=false;
 const HDL_MSG_DEFAULT=document.getElementById('hdlEstimateMessage').textContent;
-// Statin intensity by drug and daily dose (ACC/AHA / ADA tables; pitavastatin 1 mg low, 2–4 mg moderate).
+// Statin intensity by drug and daily dose (ACC/AHA / ADA tables; pitavastatin 1–4 mg moderate).
 function statinIntensity(drug,dose){
  if(dose===null||!Number.isFinite(dose)||dose<=0)return null;
- const t={atorvastatin:[10,40],rosuvastatin:[5,20],pravastatin:[40,Infinity],pitavastatin:[2,Infinity]}[drug];
+ const t={atorvastatin:[10,40],rosuvastatin:[5,20],pravastatin:[40,Infinity],pitavastatin:[1,Infinity]}[drug];
  if(!t)return null;return dose>=t[1]?'high':dose>=t[0]?'moderate':'low';
 }
 const VIEW_LABEL={decision:'風險評估與處方',meds:'藥物治療策略',follow:'追蹤與趨勢',cases:'示範病例',quiz:'分級測驗',mind:'診療心智圖',sources:'指引與資料來源'};
@@ -599,7 +650,101 @@ const Q=[
 function renderQuiz(){const qs=Q.map((q,i)=>({...{level:q[0],text:q[1],options:q[2],answer:q[3],explanation:q[4]},idx:i})).filter(q=>q.level===quizLevel);$('quizTitle').textContent=quizLevel==='resident'?'住院醫師：核心知識 10 題':'主治醫師：高階臨床決策 10 題';$('quizState').textContent='完成全部題目後按「批改並顯示解析」。';$('quizResult').classList.add('hidden');$('questionList').innerHTML=qs.map((q,i)=>`<div class="quiz-card" data-qidx="${q.idx}"><h3><span class="textchip">Q${i+1}</span>　${escapeHTML(q.text)}</h3><div class="options">${q.options.map((s,j)=>`<label class="qopt"><input type="radio" name="q${q.idx}" value="${j}"> ${String.fromCharCode(65+j)}. ${escapeHTML(s)}</label>`).join('')}</div><div class="quiz-feedback hidden"></div></div>`).join('');}
 function gradeQuiz(){const qs=Q.map((q,i)=>({level:q[0],text:q[1],options:q[2],answer:q[3],explanation:q[4],idx:i})).filter(q=>q.level===quizLevel);let correct=0,answered=0;qs.forEach(q=>{const card=document.querySelector(`[data-qidx="${q.idx}"]`),pick=card.querySelector(`input[name="q${q.idx}"]:checked`),ans=pick?Number(pick.value):null;if(ans!==null)answered++;if(ans===q.answer)correct++;const fb=card.querySelector('.quiz-feedback');fb.classList.remove('hidden');fb.innerHTML=`<strong style="color:${ans===q.answer?'#117655':'#ad4a39'}">${ans===q.answer?'✓ 答對':'✕ '+(ans===null?'未作答':'答錯')}</strong>　正確答案：${String.fromCharCode(65+q.answer)}。${escapeHTML(q.explanation)}`;});const el=$('quizResult');el.classList.remove('hidden');el.innerHTML=`<h3 style="margin:0 0 6px">測驗結果：${correct} / ${qs.length} 題（${Math.round(correct/qs.length*100)}%）</h3><p style="margin:0;color:#5e788c;font-size:13px">已作答 ${answered} 題。各題解析已顯示在題目下方，可重新作答。</p>`;$('quizState').textContent=`答對 ${correct} 題，答錯或未答 ${qs.length-correct} 題。`;el.scrollIntoView({behavior:'smooth',block:'nearest'});}
 $('quizResident').addEventListener('click',()=>{quizLevel='resident';renderQuiz();});$('quizAttending').addEventListener('click',()=>{quizLevel='attending';renderQuiz();});$('gradeQuiz').addEventListener('click',gradeQuiz);$('resetQuiz').addEventListener('click',renderQuiz);
-$('expandMind').addEventListener('click',()=>document.querySelectorAll('.mindt').forEach(d=>d.open=true));$('collapseMind').addEventListener('click',()=>document.querySelectorAll('.mindt').forEach(d=>d.open=false));
+// Mind map content. {{x}} marks a key fact hidden in 複習模式 (click to reveal).
+const MIND=[
+ {id:'m1',icon:'①',color:'#0f8b8d',title:'初始評估與次發性原因',summary:'血脂檢驗、LDL-C 算法、次發性原因、FH 篩檢',children:[
+  {title:'血脂檢驗',points:['完整血脂：TC、LDL-C、HDL-C、TG；non-HDL-C = {{TC − HDL-C}}','非空腹檢驗多數情況可用；TG {{≥400}} mg/dL 時改直接 LDL-C 或看 non-HDL-C／ApoB','台灣健保表一：極高／非常高風險急性病人應於入院後 {{24 小時}}內完成血脂檢驗','Lp(a)：成人一生至少測 {{一次}}；主要由基因決定，生活型態改變影響小','ApoB 反映致動脈粥狀硬化粒子數；糖尿病、高 TG、肥胖時較 LDL-C 更能反映殘餘風險']},
+  {title:'LDL-C 計算法與陷阱',points:['Friedewald：LDL-C = TC − HDL-C − {{TG/5}}（mg/dL）','TG 高或 LDL-C 很低時 Friedewald 低估 LDL-C；可改 Martin–Hopkins／Sampson 或直接測量','本頁 HDL-C 反推（TC − 直接 LDL-C − TG/5）只是探索性估算，{{不能}}取代實測 HDL-C']},
+  {title:'次發性血脂異常（先排除）',points:['內分泌：{{甲狀腺低下}}、控制不良糖尿病、庫欣、懷孕','腎肝：{{腎病症候群}}、CKD、膽汁鬱積性肝病','藥物：類固醇、thiazide、β-blocker（非 ISA）、retinoid、抗精神病藥、cyclosporine／tacrolimus、HIV protease inhibitor、口服雌激素（升 TG）','生活：酒精（升 TG）、肥胖、高精緻醣飲食']},
+  {title:'家族性高膽固醇血症（FH）',points:['成人 LDL-C {{≥190}} mg/dL（未治療）須懷疑 FH','線索：肌腱黃色瘤、角膜弓（<45 歲）、早發 ASCVD（男 ≤55、女 ≤65 歲）家族史','Dutch Lipid Clinic Network：>8 分確診、6–8 分很可能','確診後做一等親{{串聯篩檢}}（cascade screening）；兒童亦須篩檢','HoFH：極高 LDL-C、兒童期即出現黃色瘤；健保 PCSK9 有另立途徑（本頁未自動計算）']}
+ ]},
+ {id:'m2',icon:'②',color:'#386ace',title:'台灣風險分層（健保表一）',summary:'五級風險定義、危險因子、代謝症候群',children:[
+  {title:'極高風險',points:['冠狀動脈疾病合併任一：{{一年內 MI}}、{{≥2 次 MI}}、多支冠狀動脈阻塞、{{ACS 合併糖尿病}}、PAD 或頸動脈狹窄','PAD 合併冠狀動脈疾病或頸動脈狹窄','LDL-C 目標 <{{55}}；non-HDL-C <{{85}} mg/dL']},
+  {title:'非常高風險',points:['臨床確診 ASCVD：ACS 病史、血管再通術（PCI／CABG）、缺血性中風／TIA 合併動脈硬化疾病、PAD（再通術、缺血症狀或截肢）','影像顯著斑塊：{{≥50%}} 直徑狹窄（冠狀動脈攝影、CTA、頸動脈／周邊血管超音波）','LDL-C 目標 <{{70}}；non-HDL-C <{{100}}']},
+  {title:'高風險',points:['{{糖尿病}}','透析前 CKD：eGFR <60 或 UACR ≥30 mg/g，持續 {{≥3 個月}}','LDL-C {{≥190}} mg/dL','CAC {{≥400}}','LDL-C 目標 <{{100}}；non-HDL-C <{{130}}']},
+  {title:'中／低風險與危險因子',points:['中風險：{{≥2}} 項危險因子（目標 <115、non-HDL <145）；低風險：{{1}} 項（<130、non-HDL <160）；0 項：LDL-C <160','危險因子：高血壓、男 ≥45／女 ≥55 歲、早發冠心病家族史（男 ≤55、女 ≤65）、HDL-C 男 <40／女 <50、吸菸、代謝症候群','代謝症候群 ≥3 項：腰圍男 ≥90／女 ≥80 cm、BP ≥130/85、空腹血糖 ≥100、TG ≥150、HDL-C 低','高風險合併嚴重高膽固醇、黃色瘤、早發 CVD 或家族史 → 依台灣 FH 標準篩檢']}
+ ]},
+ {id:'m3',icon:'③',color:'#7a5cc4',title:'國際指引分層與目標',summary:'ACC/AHA 2026、ESC/EAS、ADA 2026 的差異',children:[
+  {title:'ACC/AHA 2026（美國）',points:['初級預防風險工具：{{PREVENT-ASCVD}} 10 年（不需種族；30–79 歲）','分級：<3% 低、3–<5% 邊緣、5–<10% 中度、{{≥10%}} 高','PREVENT 不適用：已有 ASCVD、LDL-C ≥190、透析／ESKD、CAC ≥300 等','CAC：0 偏向延後藥物（吸菸、糖尿病、早發家族史除外）；分數越高越支持 Statin','Lp(a) 風險增強常用 ≥{{125}} nmol/L（≈50 mg/dL）']},
+  {title:'ESC/EAS 2019 目標（2025 更新沿用）',points:['非常高風險：LDL-C <{{55}} 且降幅 {{≥50%}}；2 年內再發事件可考慮 <40','高風險：<{{70}} 且降幅 ≥50%；中風險 <100；低風險 <116','次要目標 non-HDL-C <85／<100／<130；ApoB <65／<80／<100','風險工具：SCORE2（40–69 歲）、SCORE2-OP（≥70 歲）','Lp(a) >{{105}} nmol/L（≈50 mg/dL）視為風險增強；不同單位不可用固定倍數精確換算']},
+  {title:'ADA 2026（糖尿病）',points:['40–75 歲無 ASCVD：至少{{中強度}} Statin','合併額外危險因子：高強度，LDL-C 目標 <{{70}}，降幅 ≥50%','合併 ASCVD：LDL-C <{{55}}；未達標加 Ezetimibe 或 PCSK9 mAb','20–39 歲合併危險因子可考慮 Statin']},
+  {title:'記憶要點',points:['三套分層定義不同，{{不能}}混用目標','「嚴格小於」目標值才算達標（LDL-C 70 不算達 <70）','相對降幅與絕對目標要同時看']}
+ ]},
+ {id:'m4',icon:'④',color:'#c3702b',title:'Statin',summary:'強度、副作用、交互作用、肌肉症狀',children:[
+  {title:'強度分級',points:['高強度（LDL-C ↓ {{≥50%}}）：atorvastatin {{40–80}} mg、rosuvastatin {{20–40}} mg','中強度（↓30–49%）：atorvastatin 10–20、rosuvastatin 5–10、simvastatin 20–40、pravastatin 40–80、lovastatin 40–80、fluvastatin XL 80、pitavastatin 1–4 mg','低強度（<30%）：simvastatin 10、pravastatin 10–20、lovastatin 20、fluvastatin 20–40','劑量加倍約只再降 LDL-C {{6%}}（rule of 6）','亞洲人 rosuvastatin 血中暴露約為白人 {{2 倍}}，宜低劑量起始']},
+  {title:'安全監測',points:['治療前測 ALT；不需例行重複監測，有症狀再測','CK 不需例行監測；肌肉症狀才測，CK >{{10×}} ULN 或橫紋肌溶解應停藥','新發糖尿病風險輕度上升，心血管效益仍大於風險','Statin 相關肌肉症狀多可經換藥、降劑量、隔日給藥再挑戰']},
+  {title:'重要交互作用',points:['CYP3A4 代謝：{{simvastatin、lovastatin、atorvastatin}}；避免與 clarithromycin、azole、ritonavir 等強抑制劑併用','Simvastatin 與 amlodipine 或 amiodarone 併用時 ≤{{20}} mg；不建議 simvastatin 80 mg','{{Gemfibrozil}} 與 Statin 併用肌病風險高；需要 fibrate 時改 fenofibrate','Cyclosporine：rosuvastatin ≤5 mg、避免 simvastatin／lovastatin；較不受 CYP 影響者：rosuvastatin、pravastatin、pitavastatin']},
+  {title:'Statin 不耐受（健保附表二-D 定義）',points:['嚴重橫紋肌溶解：{{一種}} Statin 即可診斷不耐受','其他肌肉／肝臟副作用：myalgia score {{>8}}，且{{兩種}} Statin 不耐受，其中一種在最低有效劑量','最低有效劑量：rosuvastatin 5、atorvastatin 10、pravastatin 10、lovastatin 20、fluvastatin 20、pitavastatin 1、simvastatin 5 mg','Statin 禁忌（附表二-D）：藥物過敏、活動性肝病變']}
+ ]},
+ {id:'m5',icon:'⑤',color:'#b3466a',title:'非 Statin 降 LDL-C 藥物',summary:'Ezetimibe、PCSK9、Inclisiran、Bempedoic acid',children:[
+  {title:'Ezetimibe',points:['10 mg qd；加在 Statin 上 LDL-C 再降約 {{20–25%}}','結果試驗：{{IMPROVE-IT}}（ACS 後 simvastatin + ezetimibe 事件下降）','CKD：SHARP 試驗 simvastatin 20 + ezetimibe 10 降低動脈粥狀硬化事件','不需腎劑量調整']},
+  {title:'PCSK9 單株抗體',points:['Evolocumab 140 mg q2w 或 420 mg q4w；Alirocumab 75–150 mg q2w 或 300 mg q4w','LDL-C 再降約 {{50–60%}}；結果試驗 {{FOURIER}}（evolocumab）、{{ODYSSEY OUTCOMES}}（alirocumab）','皮下注射；主要副作用為注射部位反應']},
+  {title:'Inclisiran（siRNA）',points:['284 mg SC：第 0、{{3}} 個月，之後每 {{6}} 個月','LDL-C 約降 50%；心血管結果試驗證據強度不可直接等同 PCSK9 mAb','由醫療人員施打，利於遵從性']},
+  {title:'Bempedoic acid',points:['180 mg qd；LDL-C 約降 {{15–25%}}（與 ezetimibe 併用更多）','{{CLEAR Outcomes}}：Statin 不耐受者事件下降','副作用：尿酸上升、痛風、肌腱斷裂（少見）；作用於肝臟，肌肉症狀少']},
+  {title:'加藥順序（台灣表一處方規定）',points:['極高／非常高風險：中至高強度 Statin 或直接合併 ezetimibe 起始','6–8 週未達標：高強度或最大耐受 Statin，同時考慮 non-statin（ezetimibe、PCSK9 mAb、siRNA、ATP citrate lyase 抑制劑）','更動治療後 {{1–3 個月}}內追蹤是否達標']}
+ ]},
+ {id:'m6',icon:'⑥',color:'#a2691b',title:'高三酸甘油酯',summary:'分級、胰臟炎、Fibrate、Omega-3',children:[
+  {title:'分級與處置優先',points:['TG ≥150 升高；{{≥500}} 嚴重（評估胰臟炎預防）；{{≥1000}} 胰臟炎高風險、積極處置','先處理次發性原因：酒精、控制不良糖尿病、甲狀腺低下、藥物、懷孕','極高 TG（≥1000）考慮家族性乳糜微粒血症（FCS）；需極低脂飲食','TG 很高時 LDL-C 計算不可靠，改看 non-HDL-C／ApoB']},
+  {title:'Fenofibrate',points:['eGFR {{30–59}}：減量（如 48 mg 或 54 mg 依劑型）；eGFR {{<30}} 或透析：避免','與 Statin 併用時優先 fenofibrate 而非 {{gemfibrozil}}','可能使血清肌酸酐可逆性上升；監測腎功能、肝功能、肌肉症狀','以 fibrate 預防 ASCVD 的證據有限（如 pemafibrate 的 PROMINENT 為中性結果）']},
+  {title:'Omega-3',points:['Icosapent ethyl 2 g bid：{{REDUCE-IT}}，Statin 治療下 TG 135–499 且有 ASCVD 或糖尿病加危險因子者事件下降','混合 EPA/DHA 製劑（STRENGTH）未見事件下降；一般魚油保健品不能取代處方製劑','台灣可近性與健保給付另行查核']}
+ ]},
+ {id:'m7',icon:'⑦',color:'#2c7a54',title:'特殊族群',summary:'CKD、透析、移植、懷孕、高齡、HIV',children:[
+  {title:'CKD（未透析）',points:['KDIGO：≥50 歲且 eGFR <60（非透析、非移植）建議 Statin 或 {{Statin + ezetimibe}}','18–49 歲 CKD：有糖尿病、冠心病、缺血性中風或 10 年風險 >10% 時用 Statin','KDIGO 參考劑量（eGFR <60）：atorvastatin 20、rosuvastatin 10、simvastatin/ezetimibe 20/10、pravastatin 40、pitavastatin 2、fluvastatin 80 mg','Rosuvastatin：嚴重腎功能不全（CrCl <30，非透析）{{5}} mg 起始，≤{{10}} mg']},
+  {title:'長期透析',points:['不例行{{新啟動}} Statin（4D、AURORA 結果中性）','已在使用者可繼續','ESC/ERA 2026：合併 ASCVD 或計畫移植者可個別考慮新啟動（{{IIb/C}}）','台灣表一五級分層不直接套用透析者']},
+  {title:'腎移植',points:['移植受者通常建議 Statin（ALERT 試驗 fluvastatin）','Cyclosporine 交互作用：避免 simvastatin／lovastatin 高劑量，rosuvastatin ≤5 mg']},
+  {title:'懷孕與哺乳',points:['計畫懷孕前通常停用 Statin；懷孕／哺乳期間一般不使用','嚴重高膽固醇（如 HoFH）由專科個別評估；膽酸結合劑較可用','懷孕本身會使 TG 與 LDL-C 上升；嚴重高 TG 有胰臟炎風險']},
+  {title:'高齡與其他',points:['>75 歲：既有 Statin 耐受者多繼續；新啟動依預期壽命、共病、意願個別化','HIV：{{REPRIEVE}} 試驗 pitavastatin 4 mg 降低心血管事件；注意與抗病毒藥物交互作用','急性冠心症：入院即開始高強度 Statin，不等血脂結果']}
+ ]},
+ {id:'m8',icon:'⑧',color:'#0b6aa8',title:'台灣健保給付',summary:'2.6.1 表一／表二、2.6.2、2.6.3、2.6.4、TG 表',children:[
+  {title:'2.6.1 表一起始值（115/9/1）',points:['極高 ≥{{55}}、非常高 ≥{{70}}、高 ≥{{100}}、中 ≥{{115}}、低 ≥{{130}}、0 項因子 ≥{{160}} mg/dL','極高／非常高／高風險：藥物與非藥物治療{{並行}}','中／低風險：給藥前需 {{3–6 個月}}生活型態改變','起始後 6–8 週追蹤；達標後每 6 個月（高風險以上）或 6–12 個月（中低風險）追蹤']},
+  {title:'2.6.1 表二（清單品項僅適用）',points:['ACS 病史或冠狀動脈 PCI／CABG：LDL-C ≥{{70}}','心血管疾病或糖尿病：TC ≥{{160}} 或 LDL-C ≥{{100}}','≥2 危險因子：TC ≥200 或 LDL-C ≥130；1 因子：TC ≥240 或 LDL-C ≥160；0 因子：LDL-C ≥190（給藥前 3–6 個月非藥物治療）','表二危險因子：HDL-C <{{40}}（不分性別）、女性停經亦算；不含代謝症候群','因吸菸而符合起始條件、未戒菸要求藥物者應{{自費}}','2026-12-01 起 Atova 10 mg（Yu Sheng）、Livalo 2 mg、Livalo OD 2 mg 移出表二']},
+  {title:'2.6.2 Ezetimibe／2.6.3 複方',points:['限原發性高膽固醇血症、HoFH；單方 2.6.2 另含{{植物固醇血症}}（複方不含）','條件：Statin 單方 {{6–8 週}}未達標；例外清單品項需 {{3 個月}}','2.6.2 另可用於 Statin 無法耐受不良反應（如 severe myalgia、myositis）；複方無此途徑','複方{{不得}}與 gemfibrozil 併用','2026-12-01 起 Zovastin 10/10、10/20 與 Livazebe HD 移出 3 個月例外清單']},
+  {title:'2.6.4 PCSK9 mAb（114/9/1）',points:['重大心血管事件（MI、冠狀動脈或其他動脈再通術、動脈硬化相關缺血性中風）後 {{一年內}}','高強度（rosuvastatin 20／atorvastatin ≥40）或最大耐受 Statin ≥{{3 個月}}，再合併 ezetimibe ≥3 個月，LDL-C 仍 >{{100}} mg/dL','Statin 禁忌／確診不耐受：ezetimibe 持續 3 個月仍 >100','須{{事前審查}}（附表二-D），每次核准 {{12 個月}}；續用需 LDL-C 較用藥前降 ≥{{30%}}','每兩週最多 1 支；兩種 PCSK9 mAb 不可併用']},
+  {title:'降 TG 給付表',points:['心血管疾病／糖尿病：TG ≥{{200}} 且（TC/HDL-C >5 或 HDL-C <40），與非藥物治療並行','無心血管疾病：同上條件，但給藥前需 3–6 個月非藥物治療','無心血管疾病：TG ≥{{500}} 可與非藥物治療並行']}
+ ]},
+ {id:'m9',icon:'⑨',color:'#55606e',title:'追蹤、考點與陷阱',summary:'追蹤時程、常見錯誤、臨床判讀',children:[
+  {title:'追蹤時程',points:['起始或調整後 {{4–12 週}}複查血脂（國際指引）；台灣表一高風險以上 6–8 週','更動治療後 1–3 個月內確認達標；穩定後 6–12 個月追蹤','表二：第一年每 {{3–6 個月}}，第二年起每 6–12 個月']},
+  {title:'未達標時先檢查',points:['服藥遵從性與服用方式','檢驗方法（計算或直接 LDL-C、TG 是否過高）','新出現的次發性原因（甲狀腺、腎病症候群、藥物）','是否已為最大耐受劑量，再考慮加藥']},
+  {title:'常見陷阱',points:['ASCVD 不等於極高風險：極高風險需符合{{特定條件}}','學會建議 ≠ TFDA 核准適應症 ≠ 健保給付條件','Lp(a) 的 nmol/L 與 mg/dL {{不能}}固定倍數換算','PCSK9 健保門檻是 LDL-C「{{高於}} 100」，等於 100 不符合','透析者不因 LDL-C 數值自動新開 Statin','PREVENT 只用於無 ASCVD 的初級預防']}
+ ]}
+];
+
+const mindDone=new Set();
+const clozeHTML=(t,q='')=>{let h=escapeHTML(t);if(q){const e=escapeHTML(q).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');h=h.replace(new RegExp(e,'gi'),m=>'\u0001'+m+'\u0002');}
+ return h.replace(/\{\{(.+?)\}\}/g,'<span class="cz" tabindex="0">$1</span>').replace(/\u0001/g,'<mark>').replace(/\u0002/g,'</mark>');};
+function renderMind(){
+ $('mindChips').innerHTML=MIND.map(b=>`<button type="button" class="mind-chip${mindDone.has(b.id)?' done':''}" style="--c:${b.color}" data-jump="${b.id}"><i>${b.icon}</i>${escapeHTML(b.title)}</button>`).join('');
+ $('mindMap').innerHTML=MIND.map(b=>{const n=b.children.reduce((k,c)=>k+c.points.length,0);
+  return `<details class="mbranch" id="${b.id}" style="--c:${b.color}"><summary><span class="mb-icon">${b.icon}</span><span class="mb-title">${escapeHTML(b.title)}</span><span class="mb-count">${b.children.length} 主題｜${n} 要點</span><span class="mb-sum">${escapeHTML(b.summary)}</span></summary><div class="mb-body">${
+   b.children.map(c=>`<details class="mnode"><summary>${escapeHTML(c.title)}</summary><ul>${c.points.map(x=>`<li>${clozeHTML(x)}</li>`).join('')}</ul></details>`).join('')
+  }<label class="mb-done no-print"><input type="checkbox" data-done="${b.id}"${mindDone.has(b.id)?' checked':''}> 本分支已複習</label></div></details>`;}).join('');
+ $('mindChips').querySelectorAll('[data-jump]').forEach(el=>el.addEventListener('click',()=>{const d=$(el.dataset.jump);d.open=true;d.querySelectorAll('.mnode').forEach(x=>x.open=true);d.scrollIntoView({behavior:'smooth',block:'start'});}));
+ $('mindMap').querySelectorAll('[data-done]').forEach(el=>el.addEventListener('change',()=>{el.checked?mindDone.add(el.dataset.done):mindDone.delete(el.dataset.done);updateMindProgress();}));
+ updateMindProgress();
+}
+function updateMindProgress(){
+ $('mindProgressText').textContent=`已複習 ${mindDone.size} / ${MIND.length} 分支`;$('mindProgressBar').style.width=`${100*mindDone.size/MIND.length}%`;
+ $('mindChips').querySelectorAll('[data-jump]').forEach(el=>el.classList.toggle('done',mindDone.has(el.dataset.jump)));
+}
+function filterMind(){
+ const q=val('mindSearch').trim(),ql=q.toLowerCase();let any=false;
+ MIND.forEach(b=>{const br=$(b.id);let hit=!!ql&&b.title.toLowerCase().includes(ql);
+  br.querySelectorAll('.mnode').forEach((nd,ci)=>{const c=b.children[ci];const titleHit=!!ql&&c.title.toLowerCase().includes(ql);let nodeHit=titleHit;
+   nd.querySelectorAll('li').forEach((li,pi)=>{const raw=c.points[pi],m=!ql||raw.replace(/\{\{|\}\}/g,'').toLowerCase().includes(ql);
+    if(ql&&m)nodeHit=true;li.hidden=!!ql&&!m&&!titleHit&&!hit;li.innerHTML=clozeHTML(raw,ql?q:'');});
+   nd.hidden=!!ql&&!nodeHit&&!hit;if(ql)nd.open=nodeHit;if(nodeHit)hit=true;});
+  br.hidden=!!ql&&!hit;if(ql)br.open=hit;if(!ql||hit)any=true;});
+ $('mindEmpty').hidden=any;
+}
+renderMind();
+$('mindSearch').addEventListener('input',filterMind);
+$('mindReview').addEventListener('change',()=>{$('mindMap').classList.toggle('mind-review',checked('mindReview'));$('mindMap').querySelectorAll('.cz').forEach(z=>z.classList.remove('show'));});
+$('mindMap').addEventListener('click',e=>{const z=e.target.closest('.cz');if(z)z.classList.toggle('show');});
+$('mindMap').addEventListener('keydown',e=>{const z=e.target.closest('.cz');if(z&&(e.key==='Enter'||e.key===' ')){e.preventDefault();z.classList.toggle('show');}});
+$('revealMind').addEventListener('click',()=>$('mindMap').querySelectorAll('.cz').forEach(z=>z.classList.add('show')));
+$('expandMind').addEventListener('click',()=>$('mindMap').querySelectorAll('details').forEach(d=>d.open=true));
+$('collapseMind').addEventListener('click',()=>$('mindMap').querySelectorAll('details').forEach(d=>d.open=false));
+
 renderCases();renderQuiz();evaluate();renderTrend();
 </script>
 </body>
